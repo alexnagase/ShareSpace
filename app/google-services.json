@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "512341402668",
+    "firebase_url": "https://sharespace-9a671.firebaseio.com",
+    "project_id": "sharespace-9a671",
+    "storage_bucket": "sharespace-9a671.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512341402668:android:adb251dd383207e4",
+        "android_client_info": {
+          "package_name": "com.example.alex.sharespace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512341402668-k42de6cg641jp9hbq9rft50g7ldp5gsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9KDqiGH86GG6dRz5CovMqV128Z4tX2o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
