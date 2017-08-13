@@ -2,18 +2,17 @@ package com.example.alex.sharespace;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,58 +21,50 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button registerButton;
+    private Button signInButton;
     private EditText editEmail;
     private EditText editPassword;
-    private TextView signIn;
+    private TextView signUp;
 
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         progressDialog = new ProgressDialog(this);
-
         firebaseAuth = FirebaseAuth.getInstance();
+
         if(firebaseAuth.getCurrentUser() != null){
             finish();
-            startActivity(new Intent (getApplicationContext(), MenuActivity.class));
+            startActivity(new Intent (getApplicationContext(), ProfileActivity.class));
         }
-
-        registerButton = (Button) findViewById(R.id.registerButton);
 
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
+        signInButton = (Button) findViewById(R.id.signInButton);
+        signUp = (TextView) findViewById(R.id.signUp);
 
-        signIn = (TextView) findViewById(R.id.signIn);
+        signInButton.setOnClickListener(this);
+        signUp.setOnClickListener(this);
 
-
-
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
-
-
-    // handle button activities
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.sharebutton) {
-//            Intent myIntent = new Intent(MainActivity.this, Share.class);
-//
-//            MainActivity.this.startActivity(myIntent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
-    private void registerUser(){
+    private void userLogin(){
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
 
@@ -89,32 +80,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
-        progressDialog.setMessage("Registering User...");
+        progressDialog.setMessage("Logging In...");
         progressDialog.show();
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
+
+        firebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            //successful registration and log in
-                            //TODO:  profile activity start
-                            Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        if(task.isSuccessful()){
+                            finish();
+                            startActivity(new Intent (getApplicationContext(), MenuActivity.class));
 
-
-                        }else{
-                            Toast.makeText(MainActivity.this, "Registration failed, try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
     @Override
     public void onClick(View v) {
-        if(v == registerButton){
-            registerUser();
+        if(v == signInButton){
+            userLogin();
+
         }
-        if (v == signIn){
-            startActivity(new Intent(this, LoginActivity.class));
-            Toast.makeText(MainActivity.this, "Login click registered", Toast.LENGTH_SHORT).show();
+        if(v == signUp){
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 }
