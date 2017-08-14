@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         signIn = (TextView) findViewById(R.id.signIn);
 
+        registerButton.setOnClickListener(this);
+        signIn.setOnClickListener(this);
+
+
 
 
     }
@@ -95,11 +99,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
                         if (task.isSuccessful()){
                             //successful registration and log in
-                            //TODO:  profile activity start
-                            Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
 
+                            Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent (getApplicationContext(), MenuActivity.class));
 
                         }else{
                             Toast.makeText(MainActivity.this, "Registration failed, try again", Toast.LENGTH_SHORT).show();
@@ -111,10 +117,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == registerButton){
             registerUser();
+            //Toast.makeText(MainActivity.this, "Register click user registered", Toast.LENGTH_SHORT).show();
+
         }
         if (v == signIn){
             startActivity(new Intent(this, LoginActivity.class));
-            Toast.makeText(MainActivity.this, "Login click registered", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Login click registered", Toast.LENGTH_SHORT).show();
         }
     }
 }

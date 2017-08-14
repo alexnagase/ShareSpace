@@ -23,12 +23,22 @@
             android:layout_margin="15dp"
             android:text="Share a Space" />
 
+
+
+
         <Button
             android:id="@+id/rentSpace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Rent a Space" />
+
+        <Button
+            android:id="@+id/sharedSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="View my shared spaces" />
 
         <Button
             android:id="@+id/profileSettings"
